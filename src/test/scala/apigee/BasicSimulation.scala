@@ -35,4 +35,3 @@ class BasicSimulation extends Simulation {
     global.responseTime.max.lessThan(50), //ms
     global.successfulRequests.percent.greaterThan(95)
   )
-}
