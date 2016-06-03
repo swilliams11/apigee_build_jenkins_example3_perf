@@ -30,8 +30,10 @@ class BasicSimulation extends Simulation {
       .headers(headers_10)
       .body(RawFileBody("Post_Catalog.json"))
   //setUp(scn.inject(atOnceUsers(5) over (10 seconds)).protocols(httpConf))
-  setUp(scn.inject(rampUsers(5) over (10 seconds)).protocols(httpConf))
-  setUp(scn).assertions(
-    global.responseTime.max.lessThan(50), //ms
-    global.successfulRequests.percent.greaterThan(95)
+  setUp(scn
+      .inject(rampUsers(5) over (10 seconds)).protocols(httpConf)
+      .assertions(
+        global.responseTime.max.lessThan(50), //ms
+        global.successfulRequests.percent.greaterThan(95)
+      )
   )
