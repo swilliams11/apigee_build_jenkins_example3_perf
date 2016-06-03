@@ -28,12 +28,16 @@ class BasicSimulation extends Simulation {
     .exec(http("Post Catalog Item") // Here's an example of a POST request
       .post("/catalogs")
       .headers(headers_10)
-      .body(RawFileBody("Post_Catalog.json"))
+      //.body(RawFileBody("Post_Catalog.json")).asJSON)
+      .body(StringBody("""{
+        "name": "books",
+        "description": "this is the books collection"
+}       """)).asJSON)
   //setUp(scn.inject(atOnceUsers(5) over (10 seconds)).protocols(httpConf))
   setUp(scn
-      .inject(rampUsers(5) over (10 seconds)).protocols(httpConf)
-      .assertions(
+      .inject(rampUsers(5) over (10 seconds)).protocols(httpConf) 
+  ).assertions(
         global.responseTime.max.lessThan(50), //ms
         global.successfulRequests.percent.greaterThan(95)
       )
-  )
+}
