@@ -6,7 +6,7 @@ import scala.concurrent.duration._
 
 class BasicSimulation extends Simulation {
 
-  val foo = System.getProperty("foo")
+  val apikey = System.getProperty("apikey")
 
   val httpConf = http
     .baseURL("http://seanwilliams-test.apigee.net/sean-catalogs2") // Here is the root for all relative URLs
@@ -20,13 +20,16 @@ class BasicSimulation extends Simulation {
 
   val scn = scenario("Scenario Name") // A scenario is a chain of requests and pauses
     .exec(http("Get catalog by ID")
-      .get("/catalogs/2"))
+      .get("/catalogs/2")
+      .queryParam("apikey", apikey))
     .pause(5) // Note that Gatling has recorder real time pauses
     .exec(http("Get calalog with query param")
-      .get("/computers?q=books"))
+      .get("/computers?q=books")
+      .queryParam("apikey", apikey))
     .pause(2)
     .exec(http("Post Catalog Item") // Here's an example of a POST request
       .post("/catalogs")
+      .queryParam("apikey", apikey)
       .headers(headers_10)
       //.body(RawFileBody("Post_Catalog.json")).asJSON)
       .body(StringBody("""{
