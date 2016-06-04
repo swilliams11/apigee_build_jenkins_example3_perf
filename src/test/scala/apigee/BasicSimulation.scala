@@ -20,7 +20,7 @@ class BasicSimulation extends Simulation {
 
   val scn = scenario("Scenario Name") // A scenario is a chain of requests and pauses
     .exec(http("Get catalog by ID")
-      .get("/catalogs/2")
+      .get("/catalogs")
       .queryParam("apikey", apikey))
     .pause(5) // Note that Gatling has recorder real time pauses
     .exec(http("Get calalog with query param")
